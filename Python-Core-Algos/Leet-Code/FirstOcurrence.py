@@ -19,7 +19,11 @@ def strStr(haystack: str, needle: str) -> int:
   return -1
 
 def optimal(haystack: str, needle: str) -> int:
-  return haystack.find(needle)
+  ## return haystack.find(needle)
+  needle_len = len(needle)
+  for i in range(0, len(haystack)):
+    if (haystack[i:i+needle_len] == needle):
+      return i
 
 def main():
   haystack = "sadbutsad"
