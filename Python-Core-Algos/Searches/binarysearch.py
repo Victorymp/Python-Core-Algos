@@ -1,7 +1,7 @@
 def binarySearchImplementation(nums1:list[int], m:int)->int:
   pntL:int = 0
 
-  pntR:int = len(nums1)-1
+  pntR:int = len(nums1)
 
   while pntL < pntR:
     pntM:int = round(pntL+((pntR - pntL)/2))
