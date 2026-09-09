@@ -12,7 +12,7 @@ def binarySearchImplementation(nums1:list[int], m:int)->int:
     
     ## To the right of the mid point
     elif m > nums1[pntM]:
-      ## Get rid of the left hand side
+      ## Get rid of the left hand side and remove the mid point from consideration
       pntL = pntM + 1
     else:
       pntR = pntM -1
