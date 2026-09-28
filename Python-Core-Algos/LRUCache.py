@@ -5,9 +5,13 @@ class LRU:
 
   def __init__(self, size:int):
     self.size = size
-    self.cacheList = [[],[] for _ in range(size)]
+    self.cacheList = [[] for _ in range(size)]
 
   def add(self, key:str, item:str):
+      ## check if we are at the end and we are still trying to add
+    if len(self.cacheList[self.size -1]) > 0:
+      self.cacheList[self.size -1] = [key, item]
+
     for i in range(len(self.cacheList)):
       if len(self.cacheList[i]) == 0:
         ## This always a
@@ -20,47 +24,36 @@ class LRU:
 
     for i in range(len(self.cacheList)):
       if self.cacheList[i][0] == key:
-        ## This is now the most recently used item
-        temp = self.cacheList[i]
+        result = self.cacheList[i]
+        self.rightShift(i-1, result)
+        return result
 
-        front = self.cacheList[0]
-        ## right shift
-        for i in range
-        self.cacheList[0] = temp
-
-        ## Put this one
-  def swapItems(self, key1:str, key2:str):
-    temp1:int = -1
-    temp2:int = -1
-    for i in range(self.size -1 ):
-      if self.cacheList[i][0] == key1:
-        temp1 = i
-      if self.cacheList[i][0] == key2:
-        temp2 = i
-      if temp1 != -1 and temp2 != -1:
-        self.cacheList[temp1][0], self.cacheList[temp2][0] = self.cacheList[temp2][0], self.cacheList[temp1][0]
-
-
-  def rightShift(self, front:list):
+  def rightShift(self, start:int , startItem:list):
     listIter = iter(self.cacheList)
-    prev = None
-    for i in range(self.cacheList):
-      curr = self.cacheList[i][0]
-      if i == 0:
-        prev = self.cacheList[i][0]
+    prev = startItem
+    for i in range(len(self.cacheList) - start):
+      ## get the current node 
+      curr = self.cacheList[i]
+      ## update the current node with the previous
+      self.cacheList[i] = prev
+      ## Check if there is next
       nextItem = next(listIter, None)
-      if nextItem != None:
-        nextItem = prev 
+      if nextItem == None:
+        break
+      ## previous node now becomes current
       prev = curr
-
 
 if __name__ == "__main__":
   cache = LRU(4)
-  cache.add("h")
-  cache.add("e")
-  cache.add("l")
-  cache.add("0")
-  cache.add("s")
+  cache.add("h1","h")
+  cache.add("e1","e")
+  cache.add("l1","l")
+  cache.add("o1","o")
+  cache.add("s1","s")
+
+  cache.getItem("l1")
+
+  cache.add("p1","p")
 
 
 
