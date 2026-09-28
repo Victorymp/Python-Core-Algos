@@ -6,6 +6,7 @@ class LRU:
   def __init__(self, size:int):
     self.size = size
     self.cacheList = [[] for _ in range(size)]
+    ## A dictonary would be a better implementation
 
   def add(self, key:str, item:str):
       ## check if we are at the end and we are still trying to add
