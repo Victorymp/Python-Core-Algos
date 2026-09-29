@@ -8,6 +8,19 @@ class LRU:
     ## Using a dict because lookup, insertion and deletion is O(1)
     self.cacheDict = {}
 
+    ## Hashmap
+    self.hash_table = [[] for _ in range(size)]
+
+  def set_val(self, key, val):
+    hashed_key = hash(key) % self.size
+    bucket = self.hash_table[hashed_key]
+
+    for index, (record_key, _) in enumerate(bucket):
+      if record_key == key:
+        bucket[index] = (key, val)
+        return
+    bucket.append((key, val))
+    
   def add(self, item:str):
     ## check if we are at the end and we are still trying to add
     ## If full then add to the end
