@@ -5,56 +5,52 @@ class LRU:
 
   def __init__(self, size:int):
     self.size = size
-    self.cacheList = [[] for _ in range(size)]
-    ## A dictonary would be a better implementation
+    ## Using a dict because lookup, insertion and deletion is O(1)
+    self.cacheDict = {}
 
-  def add(self, key:str, item:str):
-      ## check if we are at the end and we are still trying to add
-    if len(self.cacheList[self.size -1]) > 0:
-      self.cacheList[self.size -1] = [key, item]
+  def add(self, item:str):
+    ## check if we are at the end and we are still trying to add
+    ## If full then add to the end
+    if len(self.cacheDict) == self.size:
+      end = self.size -1
+      self.cacheDict[end] = item
+      return 0
 
-    for i in range(len(self.cacheList)):
-      if len(self.cacheList[i]) == 0:
-        ## This always a
-        self.cacheList[i] = [key, item]
-        break
-    print(self.cacheList)
-    ## Check items in list 
+    self.cacheDict[len(self.cacheDict)] = item
+    return 0
 
   def getItem(self, key:str) -> str:
-
-    for i in range(len(self.cacheList)):
-      if self.cacheList[i][0] == key:
-        result = self.cacheList[i]
-        self.rightShift(i-1, result)
-        return result
-
-  def rightShift(self, start:int , startItem:list):
-    listIter = iter(self.cacheList)
-    prev = startItem
-    for i in range(len(self.cacheList) - start):
+    result = self.cacheDict[key]
+    self.righShiftDict(key)
+    return result
+  
+  def righShiftDict(self, startKey:int):
+    listIter = iter(self.cacheDict)
+    prev = self.cacheDict[startKey]
+    for i in range(startKey+1):
       ## get the current node 
-      curr = self.cacheList[i]
+      curr = self.cacheDict[i]
       ## update the current node with the previous
-      self.cacheList[i] = prev
+      self.cacheDict[i] = prev
       ## Check if there is next
-      nextItem = next(listIter, None)
-      if nextItem == None:
+      if next(listIter,None) == None:
         break
       ## previous node now becomes current
       prev = curr
 
 if __name__ == "__main__":
   cache = LRU(4)
-  cache.add("h1","h")
-  cache.add("e1","e")
-  cache.add("l1","l")
-  cache.add("o1","o")
-  cache.add("s1","s")
+  cache.add("h")
+  cache.add("e")
+  cache.add("l")
+  cache.add("o")
+  cache.add("s")
 
-  cache.getItem("l1")
+  cache.getItem(2)
 
-  cache.add("p1","p")
+  cache.add("p")
+
+  print(cache.cacheDict)
 
 
 
