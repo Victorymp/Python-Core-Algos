@@ -11,6 +11,10 @@ class LRU:
     ## Hashmap
     self.hash_table = [[] for _ in range(size)]
 
+    ## Linked list
+    ## Implementing it by via a queue
+    self.cache = []
+
   def set_val(self, key, val):
     hashed_key = hash(key) % self.size
     bucket = self.hash_table[hashed_key]
