@@ -1,6 +1,8 @@
 ## An LRU (Least Recently Used) cache 
 #  is a data storage structure that holds a limited number of items and automatically deletes the oldest, 
 #  least-accessed item whenever the cache becomes full
+
+from DataStructures import LinkedList
 class LRU:
 
   def __init__(self, size:int):
@@ -13,7 +15,7 @@ class LRU:
 
     ## Linked list
     ## Implementing it by via a queue
-    self.cache = []
+    self.cache = LinkedList()
 
   def set_val(self, key, val):
     hashed_key = hash(key) % self.size
